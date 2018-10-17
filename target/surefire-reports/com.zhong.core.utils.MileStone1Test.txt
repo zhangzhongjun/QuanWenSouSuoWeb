@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.zhong.core.utils.MileStone1Test
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0 s <<< FAILURE! - in com.zhong.core.utils.MileStone1Test
+t1(com.zhong.core.utils.MileStone1Test)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.zhong.core.utils.MileStone1Test.t1(MileStone1Test.java:20)
+
+t2(com.zhong.core.utils.MileStone1Test)  Time elapsed: 0 s  <<< ERROR!
+java.io.FileNotFoundException: D:\ruiyun\王剑锋\QuanWenSouSuoWeb\uploads\入门.py (系统找不到指定的文件。)
+	at com.zhong.core.utils.MileStone1Test.t2(MileStone1Test.java:36)
+

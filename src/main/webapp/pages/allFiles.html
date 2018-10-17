@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSE系统</title>
+    <link href='/QuanWenSouSuoWeb/bootstrap-3.3.7/css/bootstrap.min.css' type="text/css" rel="stylesheet"/>
+    <link href='/QuanWenSouSuoWeb/css/fileinput.min.css' type="text/css" rel="stylesheet" media="all"/>
+
+    <style type="text/css">
+        * {
+            font-size: 18px;
+        }
+
+        footer {
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        footer .footer-below {
+            background-color: #2c3e50;
+            color: #ddd;
+            font-size: 14px;
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
+    <style>
+        .nav > li > a {
+            color: #fff;
+            font-size: 20px;
+            height: 60px;
+            padding-top: 15px;
+        }
+
+        .nav > li > a:hover,
+        .nav > li > a:focus {
+            text-decoration: none;
+            background-color: #eee;
+            color: #75a086;
+        }
+
+        .nav > li.active {
+            background-color: #eee;
+        }
+
+        .nav > li.active > a {
+            color: #75a086;
+        }
+    </style>
+
+    <style>
+        .spinner {
+            margin: 100px auto;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            text-align: center;
+
+            -webkit-animation: sk-rotate 2.0s infinite linear;
+            animation: sk-rotate 2.0s infinite linear;
+        }
+
+        .dot1, .dot2 {
+            width: 60%;
+            height: 60%;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            background-color: #333;
+            border-radius: 100%;
+
+            -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+            animation: sk-bounce 2.0s infinite ease-in-out;
+        }
+
+        .dot2 {
+            top: auto;
+            bottom: 0;
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        @-webkit-keyframes sk-rotate {
+            100% {
+                -webkit-transform: rotate(360deg)
+            }
+        }
+
+        @keyframes sk-rotate {
+            100% {
+                transform: rotate(360deg);
+                -webkit-transform: rotate(360deg)
+            }
+        }
+
+        @-webkit-keyframes sk-bounce {
+            0%, 100% {
+                -webkit-transform: scale(0.0)
+            }
+            50% {
+                -webkit-transform: scale(1.0)
+            }
+        }
+
+        @keyframes sk-bounce {
+            0%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            }
+            50% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+            }
+        }
+
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden;overflow-y: hidden;">
+<div id="loader-wrapper">
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-inverse" role="navigation" style="margin-bottom: 0px">
+    <div class="navbar-header">
+        <a class="navbar-brand" style="color: #FFFFFF; font-size: 18px; ">SSE系统</a>
+    </div>
+    <div style="float: right;margin-right: 20px;">
+        <a class="navbar-brand" style="color: #dddddd; font-size: 14px;"
+           href="/QuanWenSouSuoWeb/pages/help.html">
+            <i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i>&nbsp;帮助</a>
+        <a class="navbar-brand" style="color: #dddddd; font-size: 14px;"
+           href="/QuanWenSouSuoWeb/pages/contactUs.html">
+            <i class="glyphicon glyphicon-phone" aria-hidden="true"></i>&nbsp;联系我们</a>
+    </div>
+</nav>
+
+<!--内容区域 ========================================= -->
+<div>
+    <!-- 左侧内容展示==================================================   -->
+    <div class="col-sm-3 col-md-2 sidebar"
+         style="background:cadetblue; padding-left: 0;padding-right: 0;position: fixed; height: 100%;left: 0;">
+        <div style="text-align: center; margin-bottom: 30px">
+            <img src="/QuanWenSouSuoWeb/img/person.png" width="120px" height="120px"/>
+            <div style="color: white" id="userName"></div>
+        </div>
+        <ul class="nav nav-sidebar">
+            <!-- 一级菜单 -->
+            <li class="active" style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a
+                    class="nav-header menu-first">
+                <i class="glyphicon glyphicon-level-up" aria-hidden="true"></i>&nbsp; 所有文件 <span class="sr-only">(current)</span></a>
+            </li>
+            <li style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a
+                    href="/QuanWenSouSuoWeb/pages/upload.html"
+                    class="nav-header menu-first">
+                <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>&nbsp; 上传文件 <span
+                    class="sr-only">(current)</span></a>
+            </li>
+            <li style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a
+                    href="/QuanWenSouSuoWeb/pages/search.html"
+                    class="nav-header menu-first">
+                <i class="glyphicon glyphicon-search" aria-hidden="true"></i>&nbsp; 搜索 <span
+                    class="sr-only">(current)</span></a>
+            </li>
+            <li style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a href="/index.html"
+                                                                                            class="nav-header menu-first">
+                <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>&nbsp; 退出登录 <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- 右侧内容展示==================================================   -->
+    <div class="col-sm-9  col-md-10"
+         style="position:fixed;height:100%;right:0;overflow-y: scroll;padding:0px 20px 200px 20px;">
+        <div style="padding: 10px 10px 10px 0px;">
+            <span>当前所处位置：</span><span style="font-size: 17px; color: cadetblue; font-weight: bold">所有文件</span>
+        </div>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">数据库中的所有文件</div>
+            <!-- Table -->
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th style="text-align: center">文件名</th>
+                    <th style="text-align: center">是否索引</th>
+                </tr>
+                </thead>
+                <tbody id="tbody" style="text-align: center">
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="example" style="text-align: center">
+                <ul id="pageLimit"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-below">
+        Copyright © 支持全文搜索的云存储系统 2017
+    </div>
+</footer>
+
+<!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+<script src="/QuanWenSouSuoWeb/jquery-3.2.1/jquery-3.2.1.min.js"></script>
+<!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+<script src="/QuanWenSouSuoWeb/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+<script src="/QuanWenSouSuoWeb/js/fileinput.min.js" type="text/javascript"></script>
+<script src="/QuanWenSouSuoWeb/js/locales/zh.js" type="text/javascript"></script>
+<script src="/QuanWenSouSuoWeb/js/jquery.form.js" type="text/javascript"></script>
+<script src="/QuanWenSouSuoWeb/js/bootstrap-paginator.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    // makes sure the whole site is loaded
+    window.onload = function () {
+        // will first fade out the loading animation
+        $('#loader').fadeOut();
+        // will fade out the white DIV that covers the website.
+        $('#loader-wrapper').delay(350).fadeOut('slow');
+        $('body').delay(350).css({
+            //'overflow-y': 'visible'
+        });
+
+        var pageCount = 1;
+        var numPerPage = 5;
+        $.ajax({
+            url: '/QuanWenSouSuoWeb/AllFilesServlet_2',
+            type: 'POST',
+            data: {'type': 'pageCount', 'count': numPerPage},
+            dataType: 'JSON',
+            success: function (callback) {
+                console.log(callback.res)
+                pageCount = parseInt(callback.res)
+
+                $('#pageLimit').bootstrapPaginator({
+                    currentPage: 1,//当前的请求页面。
+                    totalPages: pageCount,//一共多少页。
+                    size: "normal",//应该是页眉的大小。
+                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                    alignment: "right",
+                    numberOfPages: numPerPage,//一页列出多少数据。
+                    itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    tooltipTitles: function (type, page, current) {
+
+                        switch (type) {
+                            case "first":
+                                return "第一页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return (page === current) ? "当前页为 " + page : "跳转到 " + page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+                        console.log(page)
+                        $.ajax({
+                            url: '/QuanWenSouSuoWeb/AllFilesServlet_2',
+                            type: 'POST',
+                            data: {'type': 'someFiles', 'page': page, 'count': numPerPage},
+                            dataType: 'JSON',
+                            success: function (callback) {
+                                console.log(callback.res)
+                                //下面这句话将会删除所有已经存在的行
+                                $('#tbody').empty();
+                                for (var i = 0; i < callback.res.length; i++) {
+                                    /*
+                                     * <tr>
+                                     *   <td onclick='selectFile(this)' class='fileDisplay'>该文件的文件名</td>
+                                     *   <td>该文件的文件大小</td>
+                                     *   <td>该文件的修改时间</td>
+                                     *   <td>该文件的权限</td>
+                                     *   <td onclick='deleteSelectFile(this)' class='fileDisplay'>
+                                     *       <u>删除</u>
+                                     *   </td>
+                                     *
+                                     * </tr>
+                                     *
+                                     * */
+                                    var temp = "<tr><td>" + callback.res[i].filename + "</td>"
+                                    if (callback.res[i].indexd) {
+                                        temp = temp + "<td>" + "已索引" + "</td></tr>"
+                                    } else {
+                                        var hrefContent = "javascript:addIndex('" + callback.res[i].filename + "')"
+                                        temp = temp + "<td id='" + callback.res[i].filename + "'><a  href=" + hrefContent + ">添加索引</a></td></tr>"
+                                    }
+                                    $("#tbody").append(temp)
+                                }
+                            }
+                        })
+                    }
+                });
+
+
+                $.ajax({
+                    url: '/QuanWenSouSuoWeb/AllFilesServlet_2',
+                    type: 'POST',
+                    data: {'type': 'someFiles', 'page': 1, 'count': numPerPage},
+                    dataType: 'JSON',
+                    success: function (callback) {
+                        console.log(callback.res)
+                        //下面这句话将会删除所有已经存在的行
+                        $('#tbody').empty();
+                        for (var i = 0; i < callback.res.length; i++) {
+                            /*
+                             * <tr>
+                             *   <td onclick='selectFile(this)' class='fileDisplay'>该文件的文件名</td>
+                             *   <td>该文件的文件大小</td>
+                             *   <td>该文件的修改时间</td>
+                             *   <td>该文件的权限</td>
+                             *   <td onclick='deleteSelectFile(this)' class='fileDisplay'>
+                             *       <u>删除</u>
+                             *   </td>
+                             *
+                             * </tr>
+                             *
+                             * */
+                            var temp = "<tr><td>" + callback.res[i].filename + "</td>"
+                            if (callback.res[i].indexd) {
+                                temp = temp + "<td>" + "已索引" + "</td></tr>"
+                            } else {
+                                var hrefContent = "javascript:addIndex('" + callback.res[i].filename + "')"
+                                temp = temp + "<td id='" + callback.res[i].filename + "'><a  href=" + hrefContent + ">添加索引</a></td></tr>"
+                            }
+                            $("#tbody").append(temp)
+                        }
+                    }
+                })
+            }
+        })
+
+
+    }
+
+    function addIndex(fileName) {
+        console.log("添加索引")
+        console.log(fileName)
+        $("[id='" + fileName + "']").empty()
+        var node = document.getElementById(fileName)
+        node.appendChild(document.createTextNode("正在索引"))
+        $.ajax({
+            url: '/QuanWenSouSuoWeb/AllFilesServlet_2',
+            type: 'POST',
+            data: {'type': 'addIndex', 'fileName': fileName},
+            dataType: 'JSON',
+            success: function (callback) {
+
+            }
+        })
+
+    }
+</script>
+
+</body>
+</html>

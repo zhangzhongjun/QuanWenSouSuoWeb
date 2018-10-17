@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.zhong.utils.MysqlHelperTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 29.802 s <<< FAILURE! - in com.zhong.utils.MysqlHelperTest
+executeQueryTest(com.zhong.utils.MysqlHelperTest)  Time elapsed: 29.802 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.zhong.utils.MysqlHelperTest.executeQueryTest(MysqlHelperTest.java:15)
+

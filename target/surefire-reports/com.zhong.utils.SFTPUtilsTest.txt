@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: com.zhong.utils.SFTPUtilsTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in com.zhong.utils.SFTPUtilsTest
+downloadFileTest(com.zhong.utils.SFTPUtilsTest)  Time elapsed: 0.015 s  <<< ERROR!
+java.lang.ExceptionInInitializerError
+	at com.zhong.utils.SFTPUtilsTest.downloadFileTest(SFTPUtilsTest.java:21)
+Caused by: java.lang.NumberFormatException: null
+	at com.zhong.utils.SFTPUtilsTest.downloadFileTest(SFTPUtilsTest.java:21)
+
+uploadFileTest(com.zhong.utils.SFTPUtilsTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class com.zhong.utils.SFTPUtils
+	at com.zhong.utils.SFTPUtilsTest.uploadFileTest(SFTPUtilsTest.java:15)
+
+uploadFileTest2(com.zhong.utils.SFTPUtilsTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class com.zhong.utils.SFTPUtils
+	at com.zhong.utils.SFTPUtilsTest.uploadFileTest2(SFTPUtilsTest.java:29)
+

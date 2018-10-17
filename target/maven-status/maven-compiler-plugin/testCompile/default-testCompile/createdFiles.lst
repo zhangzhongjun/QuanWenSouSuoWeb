@@ -1,0 +1,8 @@
+com\zhong\core\utils\MileStone1Test.class
+com\zhong\utils\SFTPUtilsTest.class
+com\zhong\core\utils\ReadFileUtilsTest.class
+com\zhong\web\dao\FileInfoDaoTest.class
+com\zhong\utils\MysqlHelperTest.class
+com\zhong\utils\MyUtilsTest.class
+com\zhong\core\utils\BloomFilterWrapperTest.class
+com\zhong\utils\UUIDTest.class

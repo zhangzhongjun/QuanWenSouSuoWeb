@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.zhong.core.utils.ReadFileUtilsTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0 s <<< FAILURE! - in com.zhong.core.utils.ReadFileUtilsTest
+extractOnlyOneFileDocTest(com.zhong.core.utils.ReadFileUtilsTest)  Time elapsed: 0 s  <<< ERROR!
+java.io.FileNotFoundException: D:\ruiyun\王剑锋\QuanWenSouSuoWeb\uploads\入门.py (系统找不到指定的文件。)
+	at com.zhong.core.utils.ReadFileUtilsTest.extractOnlyOneFileDocTest(ReadFileUtilsTest.java:48)
+
+extractTextParTest(com.zhong.core.utils.ReadFileUtilsTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalArgumentException
+	at com.zhong.core.utils.ReadFileUtilsTest.extractTextParTest(ReadFileUtilsTest.java:35)
+
