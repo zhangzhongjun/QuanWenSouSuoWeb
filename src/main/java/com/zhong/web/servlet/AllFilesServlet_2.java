@@ -8,18 +8,21 @@ import com.zhong.web.modle.FileInfo_2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @WebServlet(name = "UploadServlet")
 public class AllFilesServlet_2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
+
         String type = request.getParameter("type");
         String dir = this.getServletConfig().getServletContext().getRealPath("/uploads");
         File uploads = new File(dir);
@@ -73,6 +76,8 @@ public class AllFilesServlet_2 extends HttpServlet {
             System.out.println("提取关键词需要时间：" + (t2 - t1) + " ms");
 
             BloomFilterWrapper.writeBF(db, dir2);
+        } else if(type.equals("info")){
+
         }
 
     }

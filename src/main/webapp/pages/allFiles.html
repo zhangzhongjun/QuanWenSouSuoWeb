@@ -180,7 +180,7 @@
                 <i class="glyphicon glyphicon-search" aria-hidden="true"></i>&nbsp; 搜索 <span
                     class="sr-only">(current)</span></a>
             </li>
-            <li style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a href="/index.html"
+            <li style="border-bottom: 1px solid #cdddd5; border-top: 1px solid #cdddd5;"><a href="javascript:logout()"
                                                                                             class="nav-header menu-first">
                 <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>&nbsp; 退出登录 <span class="sr-only">(current)</span></a>
             </li>
@@ -237,17 +237,11 @@
 <script src="/QuanWenSouSuoWeb/js/locales/zh.js" type="text/javascript"></script>
 <script src="/QuanWenSouSuoWeb/js/jquery.form.js" type="text/javascript"></script>
 <script src="/QuanWenSouSuoWeb/js/bootstrap-paginator.js" type="text/javascript"></script>
+<script src="/QuanWenSouSuoWeb/js/main.js" type="text/javascript"></script>
+
 
 <script type="text/javascript">
-    // makes sure the whole site is loaded
-    window.onload = function () {
-        // will first fade out the loading animation
-        $('#loader').fadeOut();
-        // will fade out the white DIV that covers the website.
-        $('#loader-wrapper').delay(350).fadeOut('slow');
-        $('body').delay(350).css({
-            //'overflow-y': 'visible'
-        });
+    function loadFiles() {
 
         var pageCount = 1;
         var numPerPage = 5;
@@ -372,9 +366,39 @@
                 })
             }
         })
-
-
     }
+</script>
+
+<script type="text/javascript">
+    // makes sure the whole site is loaded
+    window.onload = function () {
+        // will first fade out the loading animation
+        $('#loader').fadeOut();
+        // will fade out the white DIV that covers the website.
+        $('#loader-wrapper').delay(350).fadeOut('slow');
+        $('body').delay(350).css({
+            //'overflow-y': 'visible'
+        });
+
+        $.ajax({
+            url: '/QuanWenSouSuoWeb/LoginServlet',
+            type: 'POST',
+            data: {'type': 'loginstate'},
+            dataType: 'JSON',
+            success: function (callback) {
+                res = callback.loginstate;
+
+                if(!res){
+                    window.alert("请先登录")
+                    window.location.href="/QuanWenSouSuoWeb/index.html";
+                }else{
+                    loadFiles();
+                }
+            }
+        })
+    }
+</script>
+<script type="text/javascript">
 
     function addIndex(fileName) {
         console.log("添加索引")
@@ -391,7 +415,6 @@
 
             }
         })
-
     }
 </script>
 

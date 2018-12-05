@@ -257,7 +257,6 @@
         console.log(typeof (document.cookie))
         isLog()
     }
-
 </script>
 
 

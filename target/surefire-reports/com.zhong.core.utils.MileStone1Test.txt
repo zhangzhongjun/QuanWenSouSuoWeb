@@ -7,6 +7,6 @@ java.lang.NullPointerException
 	at com.zhong.core.utils.MileStone1Test.t1(MileStone1Test.java:20)
 
 t2(com.zhong.core.utils.MileStone1Test)  Time elapsed: 0 s  <<< ERROR!
-java.io.FileNotFoundException: D:\ruiyun\王剑锋\QuanWenSouSuoWeb\uploads\入门.py (系统找不到指定的文件。)
+java.io.FileNotFoundException: C:\Users\zhangzhongjun\Documents\QuanWenSouSuoWeb\uploads\入门.py (系统找不到指定的文件。)
 	at com.zhong.core.utils.MileStone1Test.t2(MileStone1Test.java:36)
 

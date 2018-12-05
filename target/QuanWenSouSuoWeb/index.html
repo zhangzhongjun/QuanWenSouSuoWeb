@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSE系统</title>
+    <link rel="stylesheet" href="/QuanWenSouSuoWeb/css/templatemo-style.css">
+    <link href="/QuanWenSouSuoWeb/bootstrap-3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <style type="text/css">
+        * {
+            font-size: 18px;
+        }
+
+        footer {
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        footer .footer-below {
+            background-color: #2c3e50;
+            color: #ddd;
+            font-size: 14px;
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
+    <style type="text/css">
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group span {
+            background: #4ca016;
+            border-color: cadetblue;
+            color: #FFFFFF;
+        }
+
+        .input-group span i {
+            font-size: 18px;
+        }
+
+        .input-group input, .input-group select {
+            border-color: cadetblue;
+        }
+
+        .content {
+            height: 350px;
+            background: #FFFFFF;
+            opacity: 1;
+            border-radius: 10px;
+            padding-top: 10px;
+            border: 1px solid #36a05e;
+            box-shadow: 0px 0px 10px 3px #c3c47e;
+        }
+    </style>
+
+</head>
+
+<body style=" background: url('/QuanWenSouSuoWeb/img/bg.gif') repeat;">
+
+<div id="loader-wrapper">
+    <div id="loader"></div>
+</div>
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" style="color: #FFFFFF; font-size: 18px; ">SSE系统</a>
+    </div>
+    <div style="float: right;margin-right: 20px;">
+        <a class="navbar-brand" style="color: #dddddd; font-size: 14px;"
+           href="/QuanWenSouSuoWeb/pages/help.html">
+            <i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i>&nbsp;帮助</a>
+        <a class="navbar-brand" style="color: #dddddd; font-size: 14px;"
+           href="/QuanWenSouSuoWeb/pages/contactUs.html">
+            <i class="glyphicon glyphicon-phone" aria-hidden="true"></i>&nbsp;联系我们</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="text-align: center;margin-top:80px;">
+            <div>
+                <div class="col-md-8 col-md-offset-2 content">
+                    <h1 style="color: #ff4925; height: 50px;font-size: 26px;font-weight: bold;">全文搜索系统
+                    </h1>
+                    <div style="margin-top: 25px;">
+                        <form action="LoginServlet" method="POST" id="loginForm">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon" id="sizing-addon1"><i
+                                        class="glyphicon glyphicon-user"></i></span>
+                                <input id="txtUserName" name="username" type="text" class="form-control"
+                                       placeholder="请输入用户名"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input id="txtPassword" name='password' type="password" class="form-control"
+                                       placeholder="请输入密码"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-success"
+                                        style="margin-right: 15px; background:#ACD5AA "><i
+                                        class="glyphicon glyphicon-log-in"></i>&nbsp;登录
+                                </button>
+                                <a href="/pages/regist.jsp" type="button" class="btn btn-success"
+                                   style="background:#ACD5AA"><i
+                                        class="glyphicon glyphicon-heart"></i>&nbsp;注册
+                                </a>
+                            </div>
+
+                            <input name="type" type="text" value="login" style="visibility: hidden">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-below">
+        Copyright © 支持全文搜索的云存储系统 2017
+    </div>
+</footer>
+
+
+<!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+<script src="/QuanWenSouSuoWeb/jquery-3.2.1/jquery-3.2.1.min.js"></script>
+<!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+<script src="/QuanWenSouSuoWeb/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/QuanWenSouSuoWeb/js/jquery.form.js"></script>
+
+<script type="text/javascript">
+    options2 = {
+        beforeSubmit: function (formData, jqForm, options) {
+            console.log(formData)
+            console.log(jqForm)
+            console.log(options)
+            if (formData[0]['value'] == "" || formData[1]['value'] == "") {
+                alert("请填写完整的信息")
+                return false
+            }
+            return true
+        },
+        success: function (data, textStatus, jqXHR) {
+            console.log(data)
+            console.log(textStatus)
+            console.log(jqXHR)
+            data = eval("(" + data + ")")
+            if (data['errorInfo'] != undefined) {
+                alert("错误的用户名或密码")
+            } else {
+                // 跳转页面
+                window.location.href = data['url']
+            }
+        }
+    }
+    $(document).ready(function () {
+        //将ajax请求和表单联系在一起
+        $("#loginForm").ajaxForm(options2)
+    })
+</script>
+
+<script type="text/javascript">
+    // 这里是加载时候的缓存的界面
+    window.onload = function () { // makes sure the whole site is loaded
+        $('#loader').fadeOut(); // will first fade out the loading animation
+        $('#loader-wrapper').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+        $('body').delay(350).css({
+            'overflow-y': 'visible'
+        });
+
+        console.log("cookie为：" + document.cookie)
+        console.log(typeof (document.cookie))
+        GetLastUser();
+    }
+</script>
+
+<script type="text/javascript">
+
+    function GetLastUser() {
+        var usr = GetCookie("username");
+        var pd = GetCookie("password")
+        //如果cookie中有记录，直接写入
+        if (usr != null) {
+            document.getElementById('txtUserName').value = usr;
+            document.getElementById("txtPassword").value = pd;
+        } else {
+            //如果没有记录，则置为空
+            document.getElementById('txtUserName').value = "";
+            document.getElementById('txtPassword').value = "";
+        }
+    }
+
+    /**
+     * 获得cookie值
+     * @param name cookie名称
+     * @returns cookie值
+     * @constructor 参数
+     */
+    function GetCookie(name) {
+        var arg = name + "=";
+        var alen = arg.length;
+        var clen = document.cookie.length;
+        var i = 0;
+        while (i < clen) {
+            var j = i + alen;
+            //alert(j);
+            if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+            i = document.cookie.indexOf(" ", i) + 1;
+            if (i == 0) break;
+        }
+        return null;
+    }
+
+    /**
+     * 获得cookie值
+     * @param offset 偏移量
+     * @returns cookie值
+     * @constructor 参数
+     */
+    function getCookieVal(offset) {
+        var endstr = document.cookie.indexOf(";", offset);
+        if (endstr == -1) endstr = document.cookie.length;
+        return unescape(document.cookie.substring(offset, endstr));
+    }
+</script>
+</body>
+</html>
